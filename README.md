@@ -6,6 +6,10 @@ It contains **only the obfuscated binary** (public API kept, internals renamed, 
 
 **Current version: `0.2.0`.**
 
+📖 **Guidance docs:** [docs/](docs/) — [Getting Started](docs/getting-started.md) ·
+[Project Structure](docs/project-structure.md) · [Engines](docs/engines.md) ·
+[Offline / No-GitHub install](docs/offline-install.md) · [Troubleshooting](docs/troubleshooting.md).
+
 ---
 
 ## Use it in a project (one line, no credentials)
