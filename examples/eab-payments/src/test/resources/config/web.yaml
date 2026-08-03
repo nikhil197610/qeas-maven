@@ -1,0 +1,4 @@
+browser: ${WEB_BROWSER:-chrome}
+headless: ${WEB_HEADLESS:-true}
+# remoteUrl: ${SELENIUM_REMOTE_URL:-}   # set for a Selenium Grid / cloud
+baseUrl: ${WEB_BASE_URL:-https://example.com}

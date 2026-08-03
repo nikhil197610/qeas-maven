@@ -40,7 +40,35 @@ powershell -ExecutionPolicy Bypass -File .\setup.ps1 -Name eab-payments
 ```bash
 bash <(curl -fsSL https://raw.githubusercontent.com/nikhil197610/qeas-maven/main/setup.sh) eab-payments
 ```
-It scaffolds a ready-to-run Gradle+TestNG project (with the Gradle wrapper) and runs the smoke test.
+It scaffolds a **ready-to-run project with Mobile, Web, API, AS/400 and a mixed (cross-engine) example**
+(plus the Gradle wrapper) and runs the API suite. Browse it first at
+[`examples/eab-payments`](examples/eab-payments).
+
+## Folder structure — how to manage all four engines + mixed flows
+Organise **by engine** (each engine keeps its own page objects/tests), with a top-level `e2e/` for
+scenarios that cross engines. Locators stay in JSON, config per engine, one TestNG suite per engine:
+```
+src/test/
+  java/com/arabbank/eab/payments/
+    mobile/  screens/common/LoginScreen.java   tests/LoginMobileTest.java   # Appium — extend BaseScreen / BaseMobileTest
+    web/     pages/LoginPage.java               tests/LoginWebTest.java      # Selenium — extend BasePage
+    api/     tests/AccountApiTest.java                                       # REST Assured — ApiClient
+    as400/   tests/BackendChecksAs400Test.java                              # JTOpen AS400System / AS400Client (+HaclTerminal on ACS)
+    e2e/     tests/TransferThenVerifyE2ETest.java                           # MIXED: mobile action -> verify via API + AS/400
+  resources/
+    config/    android.yaml ios.yaml browserstack.yaml web.yaml api.yaml as400.yaml
+    locators/  common/LoginScreen.json          # JSON locators, grouped by feature module
+    data/      testdata.yaml
+    suites/    mobile.xml web.xml api.xml as400.xml e2e.xml regression.xml
+    testng.xml                                   # default = API (green anywhere)
+```
+**Run a specific engine:**
+```
+gradlew test                    # API suite (default, no device/host needed)
+gradlew test -Psuite=mobile     # or web | as400 | e2e | regression
+```
+A **mixed** test just extends `BaseMobileTest` (for the mobile part) and, in the same method, calls
+`ApiClient` and `AS400System` to verify the backend — see `e2e/TransferThenVerifyE2ETest.java`.
 
 ## What each engine gives you
 - **Mobile** — `DriverFactory` + `BaseScreen` (one `click()`, waits, gestures, self-healing).

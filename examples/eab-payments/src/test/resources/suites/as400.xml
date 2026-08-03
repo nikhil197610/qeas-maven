@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="as400" verbose="1"><listeners><listener class-name="com.qeas.automation.reporting.RetryListener"/><listener class-name="com.qeas.automation.reporting.AllureListener"/></listeners>
+  <test name="as400"><classes><class name="com.arabbank.eab.payments.as400.tests.BackendChecksAs400Test"/></classes></test>
+</suite>

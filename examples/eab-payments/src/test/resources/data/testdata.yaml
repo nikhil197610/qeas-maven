@@ -1,0 +1,4 @@
+users:
+  internal:
+    username: ${EAB_USERNAME:-AutomationUser}
+    password: ${EAB_PASSWORD:-changeme}

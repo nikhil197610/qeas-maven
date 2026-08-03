@@ -1,0 +1,5 @@
+remoteUrl: ${APPIUM_URL:-http://127.0.0.1:4723}
+deviceName: ${IOS_DEVICE_NAME:-iPhone 15}
+platformVersion: ${IOS_PLATFORM_VERSION:-17.5}
+automationName: XCUITest
+app: ${IOS_APP_PATH:-/path/to/app.app}

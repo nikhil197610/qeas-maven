@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="mobile" verbose="1"><listeners><listener class-name="com.qeas.automation.reporting.RetryListener"/><listener class-name="com.qeas.automation.reporting.AllureListener"/></listeners>
+  <parameter name="target" value="android"/>
+  <test name="mobile"><classes><class name="com.arabbank.eab.payments.mobile.tests.LoginMobileTest"/></classes></test>
+</suite>

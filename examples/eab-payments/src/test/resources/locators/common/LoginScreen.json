@@ -1,0 +1,12 @@
+{
+  "screen": "common/LoginScreen",
+  "_note": "Verify these resource-ids/xpaths against a live device.",
+  "elements": {
+    "username":    { "android": [{ "strategy": "xpath", "value": "(//android.widget.EditText)[1]" }],
+                     "ios":     [{ "strategy": "accessibilityId", "value": "Username" }] },
+    "password":    { "android": [{ "strategy": "xpath", "value": "(//android.widget.EditText)[2]" }],
+                     "ios":     [{ "strategy": "accessibilityId", "value": "Password" }] },
+    "loginButton": { "android": [{ "strategy": "xpath", "value": "//*[contains(@resource-id,'login_button')]" }],
+                     "ios":     [{ "strategy": "accessibilityId", "value": "Login" }] }
+  }
+}

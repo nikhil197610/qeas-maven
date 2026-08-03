@@ -1,0 +1,9 @@
+remoteUrl: ${APPIUM_URL:-http://127.0.0.1:4723}
+deviceName: ${ANDROID_DEVICE_NAME:-emulator-5554}
+platformVersion: ${ANDROID_PLATFORM_VERSION:-14}
+automationName: UiAutomator2
+app: ${ANDROID_APP_PATH:-/path/to/app.apk}
+noReset: false
+newCommandTimeout: 120
+extraCapabilities:
+  "appium:autoGrantPermissions": true

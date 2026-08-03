@@ -1,0 +1,10 @@
+remote: true
+remoteUrl: https://${BROWSERSTACK_USER}:${BROWSERSTACK_KEY}@hub-cloud.browserstack.com/wd/hub
+apps:
+  android: ${BROWSERSTACK_ANDROID_APP:-bs://REPLACE_ME}
+  ios: ${BROWSERSTACK_IOS_APP:-bs://REPLACE_ME}
+common:
+  projectName: eab-payments
+  appiumVersion: "1.21.0"
+devices:
+  sampleAndroid: { platform: ANDROID, deviceName: Samsung Galaxy S24, osVersion: "14.0" }

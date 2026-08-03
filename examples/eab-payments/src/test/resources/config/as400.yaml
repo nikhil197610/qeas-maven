@@ -1,0 +1,5 @@
+host: ${AS400_HOST:-your-iseries-host}
+user: ${AS400_USER:-QUSER}
+password: ${AS400_PASSWORD:-}
+# 5250 green-screen (HaclTerminal) needs IBM ACS acshod2.jar on the runner:
+port: ${AS400_TELNET_PORT:-23}
