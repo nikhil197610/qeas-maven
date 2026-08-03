@@ -71,6 +71,39 @@ try (AS400System ibmi = new AS400System(host, user, password)) {
 ```
 Run: `gradlew test -Psuite=as400` (host/creds in `config/as400.yaml`).
 
+### Recipe: EQUATION green-screen (mixed locate + fallback)
+The 5250 client (`HaclTerminal`, on an ACS box) drives EQUATION by writing/reading **fields**. Prefer
+the label-anchored `setFieldByLabel` / `readFieldByLabel` — they find the **row** from the label (a
+field's column is stable; the row shifts when a screen changes) and **fall back** to a fixed row if
+the label isn't visible. Positions come from the real screens (verify them once against a live host).
+```java
+try (Terminal5250Client eq = new HaclTerminal()) {   // HaclTerminal needs IBM ACS acshod2.jar
+    eq.connect(host, 23);
+    eq.waitForScreen("Sign On", Duration.ofSeconds(10));
+
+    // 1) Sign on — label anchors the row, fixed column, fallback row as the safety net
+    eq.setFieldByLabel("User", 53, user, 6);
+    eq.setFieldByLabel("Password", 53, password, 7);
+    eq.pressAidKey(AidKey.ENTER);
+
+    // 2) Navigate to Transaction History Enquiry
+    eq.waitForScreen("EQUATION", Duration.ofSeconds(15));
+    eq.setFieldByLabel("Option", 8, "TH", 20);       // menu code
+    eq.pressAidKey(AidKey.ENTER);
+    eq.setFieldByLabel("Account", 30, account, 4);
+    eq.pressAidKey(AidKey.ENTER);
+
+    // 3) Read back a value to verify (matches what the mobile transfer produced)
+    eq.waitForScreen("Transaction History", Duration.ofSeconds(15));
+    String balance = eq.readFieldByLabel("Balance", 60, 15, 12);
+    String screen  = eq.getScreenText();             // full buffer for a contains-assert / logging
+    assertTrue(screen.contains("MBK TRF"));
+    assertTrue(isPositiveAmount(balance));
+}
+```
+This is the backend half of a **mixed** test: do the transfer on mobile, capture the `EW-`/`ED-`
+reference, then confirm the posting landed in EQUATION here.
+
 ## Mixed (cross-engine end-to-end)
 One scenario spanning engines: act on **mobile**, then verify on the **API** and the **AS/400** backend.
 ```java
