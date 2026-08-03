@@ -1,16 +1,19 @@
 package com.arabbank.eab.payments.mobile.tests;
 
-import com.arabbank.eab.payments.mobile.screens.common.LoginScreen;
-import com.qeas.automation.core.BaseMobileTest;
+import com.arabbank.eab.payments.mobile.data.LoginData;
+import com.arabbank.eab.payments.mobile.flows.LoginFlow;
+import com.arabbank.eab.payments.mobile.screens.common.HomeScreen;
+import com.arabbank.eab.payments.support.BaseTest;
 import org.testng.annotations.Test;
+
 import static org.testng.Assert.assertTrue;
 
-/** Extends the framework's BaseMobileTest, which builds the Appium driver from config/ + -Dtarget. */
-public class LoginMobileTest extends BaseMobileTest {
+/** Data-driven mobile test: creds come from testdata.yaml, login is driven by the reusable flow. */
+public class LoginMobileTest extends BaseTest {
     @Test
-    public void loginScreenIsReached() {
-        LoginScreen login = new LoginScreen(driver(), locatorContext);
-        assertTrue(login.isDisplayed(), "Login screen should be visible on launch");
-        // login.loginAs("myUser", "myPass");
+    public void userCanLogInToDashboard() {
+        LoginData creds = LoginData.from(user("internal"));
+        HomeScreen home = new LoginFlow(driver(), locatorContext).login(creds.username(), creds.password());
+        assertTrue(home.isLoaded(), "Dashboard should load after login");
     }
 }

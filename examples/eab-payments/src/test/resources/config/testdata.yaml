@@ -1,3 +1,4 @@
+# Project test data. Override per-environment via env vars / -D system properties.
 users:
   internal:
     username: ${EAB_USERNAME:-AutomationUser}

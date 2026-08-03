@@ -5,8 +5,12 @@ settings.gradle.kts
 src/test/java/com/arabbank/eab/payments/api/tests/AccountApiTest.java
 src/test/java/com/arabbank/eab/payments/as400/tests/BackendChecksAs400Test.java
 src/test/java/com/arabbank/eab/payments/e2e/tests/TransferThenVerifyE2ETest.java
+src/test/java/com/arabbank/eab/payments/mobile/data/LoginData.java
+src/test/java/com/arabbank/eab/payments/mobile/flows/LoginFlow.java
+src/test/java/com/arabbank/eab/payments/mobile/screens/common/HomeScreen.java
 src/test/java/com/arabbank/eab/payments/mobile/screens/common/LoginScreen.java
 src/test/java/com/arabbank/eab/payments/mobile/tests/LoginMobileTest.java
+src/test/java/com/arabbank/eab/payments/support/BaseTest.java
 src/test/java/com/arabbank/eab/payments/web/pages/LoginPage.java
 src/test/java/com/arabbank/eab/payments/web/tests/LoginWebTest.java
 src/test/resources/config/android.yaml
@@ -14,8 +18,8 @@ src/test/resources/config/api.yaml
 src/test/resources/config/as400.yaml
 src/test/resources/config/browserstack.yaml
 src/test/resources/config/ios.yaml
+src/test/resources/config/testdata.yaml
 src/test/resources/config/web.yaml
-src/test/resources/data/testdata.yaml
 src/test/resources/locators/common/LoginScreen.json
 src/test/resources/suites/api.xml
 src/test/resources/suites/as400.xml

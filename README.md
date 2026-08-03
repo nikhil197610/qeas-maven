@@ -50,18 +50,27 @@ scenarios that cross engines. Locators stay in JSON, config per engine, one Test
 ```
 src/test/
   java/com/arabbank/eab/payments/
-    mobile/  screens/common/LoginScreen.java   tests/LoginMobileTest.java   # Appium — extend BaseScreen / BaseMobileTest
-    web/     pages/LoginPage.java               tests/LoginWebTest.java      # Selenium — extend BasePage
-    api/     tests/AccountApiTest.java                                       # REST Assured — ApiClient
-    as400/   tests/BackendChecksAs400Test.java                              # JTOpen AS400System / AS400Client (+HaclTerminal on ACS)
-    e2e/     tests/TransferThenVerifyE2ETest.java                           # MIXED: mobile action -> verify via API + AS/400
+    support/ BaseTest.java                        # project base: extends BaseMobileTest, loads testdata
+    mobile/                                       # Appium
+       screens/common/  LoginScreen.java HomeScreen.java   # page objects — extend BaseScreen
+       flows/           LoginFlow.java                     # reusable multi-screen flows
+       data/            LoginData.java                      # data records built from testdata.yaml
+       tests/           LoginMobileTest.java                # data-driven test (BaseTest + flow + data)
+    web/                                          # Selenium
+       pages/  LoginPage.java                     # extend BasePage
+       tests/  LoginWebTest.java
+    api/     tests/AccountApiTest.java            # REST Assured — ApiClient
+    as400/   tests/BackendChecksAs400Test.java    # JTOpen AS400System / AS400Client (+HaclTerminal on ACS)
+    e2e/     tests/TransferThenVerifyE2ETest.java # MIXED: mobile action -> verify via API + AS/400
   resources/
-    config/    android.yaml ios.yaml browserstack.yaml web.yaml api.yaml as400.yaml
-    locators/  common/LoginScreen.json          # JSON locators, grouped by feature module
-    data/      testdata.yaml
+    config/    android.yaml ios.yaml browserstack.yaml web.yaml api.yaml as400.yaml testdata.yaml
+    locators/  common/LoginScreen.json            # JSON locators, grouped by feature module
     suites/    mobile.xml web.xml api.xml as400.xml e2e.xml regression.xml
-    testng.xml                                   # default = API (green anywhere)
+    testng.xml                                    # default = API (green anywhere)
 ```
+Same shape as the real EAB project: **page objects** per screen, **flows** composing them, **data**
+records from `testdata.yaml`, a project **BaseTest**, config per engine, JSON locators. Add a screen →
+add its locator JSON; add a scenario → add a flow + a data record + a test.
 **Run a specific engine:**
 ```
 gradlew test                    # API suite (default, no device/host needed)
